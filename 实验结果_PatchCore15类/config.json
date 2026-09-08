@@ -1,0 +1,15 @@
+{
+  "mvtec_root": "D:\\data数据集\\MVTec AD",
+  "cache_root": "runs/reliability_v2/enhancement_outputs",
+  "output_root": "runs/reliability_v2/patchcore/mvtec15_training_range",
+  "degradation": "training_range",
+  "domains": {
+    "dark": "dark",
+    "mirnetv2": "mirnetv2",
+    "icra": "icra"
+  },
+  "seed": 20260830,
+  "batch_size": 1,
+  "coreset_ratio": 0.1,
+  "config_sha256": "2a39854c22b28218a5b2273a8a19c9d332cd129e0d9dfa09d258574d2840eaf8"
+}

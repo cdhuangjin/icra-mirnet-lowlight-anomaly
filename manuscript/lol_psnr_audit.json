@@ -1,0 +1,25 @@
+{
+  "metric_definition": "MIRNetv2/Enhancement/utils.py::PSNR on float32 images scaled to [0,1]",
+  "restored_directory": "MIRNetv2/Enhancement/results/Lol",
+  "target_directory": "MIRNetv2/Enhancement/Datasets/test/Lol/target",
+  "images": 15,
+  "mean_psnr": 24.74104776906673,
+  "rounded_2dp": 24.74,
+  "per_image": {
+    "1.png": 21.740530699002356,
+    "111.png": 30.72852345137971,
+    "146.png": 27.94642424905113,
+    "179.png": 20.875439247533603,
+    "22.png": 28.97166258567111,
+    "23.png": 24.86870716758105,
+    "493.png": 14.21894028918594,
+    "547.png": 16.583884876050327,
+    "55.png": 19.9916637636419,
+    "665.png": 28.063165061804376,
+    "669.png": 27.63786744123434,
+    "748.png": 28.599930928243676,
+    "778.png": 24.718130352793516,
+    "780.png": 28.535142185593504,
+    "79.png": 27.635704237234407
+  }
+}

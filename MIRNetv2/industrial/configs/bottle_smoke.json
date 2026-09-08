@@ -1,0 +1,12 @@
+{
+  "data_root": "D:\\data数据集\\MVTec AD",
+  "weights": "C:\\Users\\PC\\Documents\\Codex\\Reproduction003\\MIRNetv2\\pretrained_models\\enhancement_lol_official.pth",
+  "categories": ["bottle"],
+  "steps": 2,
+  "batch_size": 2,
+  "accumulation_steps": 4,
+  "patch_size": 128,
+  "seed": 20260830,
+  "max_eval_images": 2,
+  "output": "runs/bottle_smoke"
+}

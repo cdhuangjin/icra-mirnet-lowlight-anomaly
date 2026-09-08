@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "validator": "PATCHCORE_MVTEC15_PASS",
+  "seed": 20260830,
+  "degradation": "training_range",
+  "categories": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "domains": [
+    "dark",
+    "mirnetv2",
+    "icra"
+  ],
+  "n_categories": 15,
+  "n_score_rows": 5175,
+  "domain_macro_auroc": {
+    "dark": 0.5029566708812986,
+    "mirnetv2": 0.489248872169949,
+    "icra": 0.5358871235976781
+  },
+  "deltas_vs_dark": {
+    "mirnetv2": -0.013707798711349584,
+    "icra": 0.03293045271637951
+  },
+  "train_test_overlap": 0,
+  "test_adaptation": false
+}

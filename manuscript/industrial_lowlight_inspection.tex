@@ -1,0 +1,142 @@
+\documentclass[10pt,journal]{IEEEtran}
+\usepackage{amsmath,amssymb,booktabs,multirow}
+\usepackage{graphicx}
+\usepackage{url}
+
+\title{Illumination-Conditioned Image Restoration for Low-Light Industrial Anomaly Inspection}
+\author{Jin Huang, Qiao Li, and Qisen Gao
+\thanks{Jin Huang and Qiao Li are with GuangXi Vocational Normal University, Nanning 530007, Guangxi Zhuang Autonomous Region, China. Jin Huang is the corresponding author (614938561@qq.com; ORCID: 0009-0005-7489-2018).}
+\thanks{Qisen Gao is with Gansu University of Political Science and Law, Lanzhou 730070, Gansu Province, China.}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Low illumination degrades both the visibility of industrial images and the reliability of downstream anomaly inspection. We introduce ICRA-MIRNet, an illumination-conditioned residual adapter around a pretrained MIRNet-v2 restoration backbone. The gate spatially modulates the pretrained restoration residual, and we jointly fine-tune the backbone and gate using only normal industrial training images under a deterministic camera-inspired low-light degradation protocol. Across three runs on 15 MVTec AD categories, ICRA-MIRNet obtains $28.472\pm0.243$~dB PSNR and $0.8946\pm0.0015$ SSIM, while raising class-macro anomaly AUROC from $0.6712\pm0.0050$ on dark inputs to $0.7378\pm0.0066$ after restoration. This benefit is not universal: restoration changes AUROC from 0.7400 to 0.7119 under mild degradation, from 0.6326 to 0.6584 under severe degradation, and from 0.6435 to 0.4777 on six-category MPDD without adaptation. These results show that improved visibility does not guarantee improved anomaly discrimination and explicitly separate controlled synthetic evidence from real low-light deployment claims.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Low-light enhancement, industrial inspection, anomaly detection, image restoration, domain robustness.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Industrial anomaly inspection is commonly developed from well-exposed training images, whereas deployed cameras may experience illumination gradients, photon noise, and read noise. Image enhancement can improve visibility, but a restoration model that changes defect evidence may increase rather than reduce inspection risk. Consequently, restoration fidelity and downstream anomaly discrimination must be evaluated together.
+
+MIRNet-v2 preserves high-resolution representations while exchanging contextual information across multiple resolutions and supports several restoration tasks, including low-light enhancement~\cite{zamir2023mirnetv2}. However, its generic enhancement output is not conditioned on the spatial illumination pattern of a specific industrial image. We therefore wrap its output residual with a learnable illumination-conditioned gate. This design retains the pretrained mapping when the gate approaches one and permits spatially selective correction after low-memory adaptation.
+
+The experiments use MVTec AD~\cite{bergmann2019mvtecad} as the primary industrial benchmark and MPDD~\cite{jezek2021mpdd} for cross-dataset evaluation. The low-light observations are generated deterministically from the original clear images. This protocol supports paired fidelity measurements, but it does not constitute evidence on real night-time factory imagery.
+
+The intended contributions are:
+\begin{itemize}
+    \item an illumination-conditioned residual formulation that adapts a pretrained MIRNet-v2 model on a single 8-GB GPU;
+    \item a leakage-controlled protocol that trains only on normal images and jointly reports PSNR, SSIM, and class-macro anomaly AUROC;
+    \item three-seed, component-ablation, cross-degradation, and MPDD cross-dataset evaluations with resumable configurations and auditable progress logs.
+\end{itemize}
+
+\section{Related Work}
+\subsection{Low-Light Image Enhancement}
+The LOL dataset introduced paired low- and normal-light images for supervised enhancement~\cite{wei2018retinex}. MIRNet-v2 subsequently provided a multiscale architecture for restoration and enhancement with high-resolution feature preservation~\cite{zamir2023mirnetv2}. Our work does not propose a replacement restoration backbone; it studies whether a lightweight illumination-conditioned residual adapter can preserve industrial defect evidence under a fixed low-light protocol.
+
+\subsection{Industrial Anomaly Inspection}
+MVTec AD contains normal training images and normal/anomalous test images across object and texture categories~\cite{bergmann2019mvtecad}. MPDD targets painted metal parts acquired under more complex manufacturing conditions~\cite{jezek2021mpdd}. We use image-level anomaly discrimination as a downstream probe. The probe is deliberately fixed across clear, dark, and restored inputs so that only the image domain changes.
+
+\section{Method}
+\subsection{Deterministic Low-Light Formation}
+Let $\mathbf{y}\in[0,1]^{3\times H\times W}$ denote a clear industrial image. A seeded degradation operator produces
+\begin{equation}
+\mathbf{x}=\operatorname{clip}\left(\operatorname{Poisson}\left(255\,\mathbf{y}^{\gamma}\odot\mathbf{m}\right)/255+\boldsymbol{\epsilon},0,1\right),
+\end{equation}
+where $\gamma$ is sampled from a fixed interval, $\mathbf{m}$ is a smooth spatial illumination plane, and $\boldsymbol{\epsilon}$ is zero-mean Gaussian read noise. For the training-range protocol, $\gamma\sim\mathcal{U}(2,4)$. The illumination plane uses horizontal and vertical slopes sampled independently from $\mathcal{U}(-0.30,0.30)$ and an offset from $\mathcal{U}(0.55,0.85)$, followed by clipping to $[0.35,1]$. Poisson noise is sampled at a 255-count scale, and the read-noise standard deviation is sampled from $\mathcal{U}(0,0.02)$. The degradation seed is the global seed plus the image index, so each indexed pair is reproducible.
+
+\subsection{Illumination-Conditioned Residual Adapter}
+Let $B(\mathbf{x})$ be the pretrained MIRNet-v2 output and
+\begin{equation}
+\ell(\mathbf{x})=0.299\mathbf{x}_R+0.587\mathbf{x}_G+0.114\mathbf{x}_B
+\end{equation}
+be luminance. A two-layer convolutional network predicts a spatial gate
+\begin{equation}
+\mathbf{g}=\sigma\left(G(1-\ell(\mathbf{x}))\right).
+\end{equation}
+The final restoration is
+\begin{equation}
+\hat{\mathbf{y}}=\mathbf{x}+\mathbf{g}\odot\left(B(\mathbf{x})-\mathbf{x}\right).
+\label{eq:adapter}
+\end{equation}
+The final gate layer is initialized with zero weights and bias eight, so the initial gate is close to one and Eq.~\eqref{eq:adapter} initially approximates the pretrained backbone.
+
+\subsection{Optimization}
+The training loss is
+\begin{equation}
+\mathcal{L}=\lVert\hat{\mathbf{y}}-\mathbf{y}\rVert_1+\lambda_{\nabla}\lVert\nabla\hat{\mathbf{y}}-\nabla\mathbf{y}\rVert_1+\lambda_g\lVert\mathbf{g}-(1-\ell(\mathbf{y}))\rVert_1.
+\end{equation}
+The default audited configuration uses $\lambda_{\nabla}=0.2$ and $\lambda_g=0.05$.
+
+\subsection{Fixed Downstream Anomaly Probe}
+For each category $c$, a frozen ImageNet-pretrained ResNet-18~\cite{he2016resnet} extracts global features $\boldsymbol{\phi}$. The official torchvision resize, center-crop, and ImageNet normalization are applied. A diagonal Gaussian is fitted only to clear normal training features:
+\begin{equation}
+s_c(\mathbf{z})=\frac{1}{d}\sum_{j=1}^{d}\frac{(\phi_j(\mathbf{z})-\mu_{c,j})^2}{\max(\sigma^2_{c,j},10^{-6})}.
+\end{equation}
+The same probe scores clear, synthetically darkened, and restored test images. AUROC is calculated within each category and macro-averaged across categories.
+
+\section{Experiments}
+\subsection{Datasets and Protocol}
+The local MVTec AD copy contains 3,629 normal training images and 1,725 test images across 15 categories. MPDD contributes 888 normal training images and 458 test images across six metal-part categories. The restoration model sees only the training/normal split. Test images never participate in restoration optimization or Gaussian fitting.
+
+The main model processes 12,000 micro-batches using $128\times128$ crops, batch size two, four-micro-batch gradient accumulation, automatic mixed precision, and seeds 20260830--20260832. Thus, each uninterrupted main run performs 3,000 Adam parameter updates at a learning rate of $2\times10^{-5}$ while jointly fine-tuning the backbone and gate. Each indexed training image receives a deterministic crop and degradation under the global seed. Full-resolution restoration uses overlapping $128\times128$ tiles with 16-pixel overlap. Training state is saved every 500 micro-batches and progress is logged every 100 micro-batches.
+
+\subsection{Metrics}
+Restoration is measured by image-pooled PSNR and SSIM~\cite{wang2004ssim}. Inspection is measured by image-level AUROC within each category and then macro-averaged without category-size weighting for clear, dark, and restored inputs. Runtime is the image-pooled restoration latency. Peak allocated CUDA memory is reset and recorded for the evaluation phase only; it is not total process memory or peak training memory. Three-seed main-model results use the arithmetic mean and sample standard deviation.
+
+\subsection{Baselines and Ablations}
+The audited matrix contains: (i) the official LOL-pretrained MIRNet-v2 without industrial adaptation; (ii) backbone fine-tuning with a fixed gate $g=1$; (iii) ICRA-MIRNet without the gradient loss; and (iv) the complete ICRA-MIRNet. Mild and severe degradation intervals test sensitivity outside the training range. A MVTec-trained checkpoint is evaluated on MPDD without further adaptation.
+
+\begin{table}[t]
+\centering
+\caption{MVTec AD results. ICRA-MIRNet reports mean $\pm$ sample standard deviation over seeds 20260830--20260832; the LOL-pretrained baseline and component ablations use seed 20260830. Values are inserted only from validated \texttt{metrics.json} files.}
+\label{tab:main}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+Method & PSNR $\uparrow$ & SSIM $\uparrow$ & Dark AUROC $\uparrow$ & Restored AUROC $\uparrow$ & Time $\downarrow$ & Memory $\downarrow$\\
+\midrule
+LOL-pretrained MIRNet-v2 & 18.168 & 0.6164 & 0.6674 & 0.7043 & 3.775~s & 350.548~MiB\\
+Fixed-gate fine-tuning & 28.581 & 0.8960 & 0.6674 & 0.7472 & 4.062~s & 386.249~MiB\\
+ICRA-MIRNet without $\mathcal{L}_{\nabla}$ & 28.744 & 0.8906 & 0.6674 & 0.7499 & 3.850~s & 386.249~MiB\\
+ICRA-MIRNet & $28.472\pm0.243$ & $0.8946\pm0.0015$ & $0.6712\pm0.0050$ & $0.7378\pm0.0066$ & $3.034\pm0.886$~s & $386.249\pm0.000$~MiB\\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Robustness and cross-dataset evaluation.}
+\label{tab:robustness}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Evaluation domain & PSNR $\uparrow$ & Restored AUROC $\uparrow$\\
+\midrule
+MVTec, mild degradation & 21.514 & 0.7119\\
+MVTec, training-range degradation & $28.472\pm0.243$ & $0.7378\pm0.0066$\\
+MVTec, severe degradation & 21.466 & 0.6584\\
+MPDD, training-range degradation & 19.337 & 0.4777\\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\section{Reproducibility and Evidence Boundaries}
+The cached outputs from official MIRNet-v2 inference on the 15-image LOL test set were independently re-evaluated with the authors' Python PSNR definition, yielding 24.7410~dB (24.74~dB when reported to two decimals). The industrial runner records configuration, checkpoints, training progress, per-image evaluation progress, per-category metrics, and final JSON output. A separate validator rejects missing categories and non-finite metrics before producing mean$\pm$standard-deviation tables.
+
+All industrial low-light inputs in this study are synthetic. Neither MVTec AD nor MPDD is a paired night-time industrial dataset. Accordingly, the experiments can establish controlled degradation robustness and cross-dataset transfer, but they cannot establish performance in a real dark factory. A real paired or exposure-bracketed industrial test set remains necessary before any deployment claim.
+
+\section{Conclusion}
+We presented an illumination-conditioned residual adapter and an audited protocol for jointly evaluating low-light restoration and industrial anomaly discrimination. Three MVTec AD runs show a mean AUROC gain of 0.0666 over training-range dark inputs. Severe degradation retains a smaller gain of 0.0258, whereas mild degradation decreases AUROC by 0.0281 and zero-adaptation transfer to MPDD decreases it by 0.1658. The mixed direction across degradation intensity and dataset shift cautions against treating restoration fidelity as a proxy for inspection reliability.
+The present evidence boundary is controlled synthetic low light; future work must add real exposure variation and an operational defect detector.
+
+\bibliographystyle{IEEEtran}
+\IEEEtriggeratref{4}
+\bibliography{references}
+\end{document}

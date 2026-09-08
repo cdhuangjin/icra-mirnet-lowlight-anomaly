@@ -1,0 +1,49 @@
+# --- runtime / caches ---
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.pytest_status/
+.pytest_tmp_merged_verify/
+
+# --- local data / paper junctions (huge, outside workspace) ---
+data数据集/
+paper/
+
+# --- MIRNetv2: upstream repo internals, weights, datasets, outputs, unrelated baselines ---
+MIRNetv2/.git/
+MIRNetv2/.venv/
+MIRNetv2/.worktrees/
+MIRNetv2/pretrained_models/
+MIRNetv2/Enhancement/pretrained_models/
+MIRNetv2/Enhancement/Datasets/
+MIRNetv2/Enhancement/results/
+MIRNetv2/Defocus_Deblurring/
+MIRNetv2/Real_Denoising/
+MIRNetv2/Super_Resolution/
+MIRNetv2/demo/
+MIRNetv2/docs/
+**/*.pth
+**/*.pt
+**/*.ckpt
+**/*.t7
+
+# --- LaTeX build artifacts ---
+*.aux
+*.log
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.out
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.run.xml
+manuscript/build/
+render-final/

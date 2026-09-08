@@ -1,0 +1,121 @@
+{
+  "detector": "patchcore",
+  "degradation": "training_range",
+  "seed": 20260830,
+  "categories": [
+    "bottle",
+    "cable",
+    "capsule",
+    "carpet",
+    "grid",
+    "hazelnut",
+    "leather",
+    "metal_nut",
+    "pill",
+    "screw",
+    "tile",
+    "toothbrush",
+    "transistor",
+    "wood",
+    "zipper"
+  ],
+  "domains": [
+    "dark",
+    "mirnetv2",
+    "icra"
+  ],
+  "category_aurocs": {
+    "bottle": {
+      "dark": 0.5349206349206349,
+      "mirnetv2": 0.6777777777777777,
+      "icra": 0.6531746031746032
+    },
+    "cable": {
+      "dark": 0.4353448275862069,
+      "mirnetv2": 0.450712143928036,
+      "icra": 0.48819340329835076
+    },
+    "capsule": {
+      "dark": 0.5277223773434384,
+      "mirnetv2": 0.49421619465496613,
+      "icra": 0.44036697247706424
+    },
+    "carpet": {
+      "dark": 0.6617174959871589,
+      "mirnetv2": 0.6079454253611556,
+      "icra": 0.6015248796147672
+    },
+    "grid": {
+      "dark": 0.3801169590643275,
+      "mirnetv2": 0.4277360066833751,
+      "icra": 0.36675020885547205
+    },
+    "hazelnut": {
+      "dark": 0.5607142857142857,
+      "mirnetv2": 0.45035714285714284,
+      "icra": 0.445
+    },
+    "leather": {
+      "dark": 0.5370244565217391,
+      "mirnetv2": 0.5716711956521738,
+      "icra": 0.5696331521739131
+    },
+    "metal_nut": {
+      "dark": 0.7038123167155426,
+      "mirnetv2": 0.5029325513196481,
+      "icra": 0.5019550342130987
+    },
+    "pill": {
+      "dark": 0.31260229132569556,
+      "mirnetv2": 0.6260229132569559,
+      "icra": 0.5559192580469176
+    },
+    "screw": {
+      "dark": 0.3344947735191638,
+      "mirnetv2": 0.14818610370977658,
+      "icra": 0.4287763886042222
+    },
+    "tile": {
+      "dark": 0.48160173160173164,
+      "mirnetv2": 0.35678210678210676,
+      "icra": 0.7178932178932179
+    },
+    "toothbrush": {
+      "dark": 0.5722222222222222,
+      "mirnetv2": 0.4166666666666667,
+      "icra": 0.6277777777777778
+    },
+    "transistor": {
+      "dark": 0.5166666666666666,
+      "mirnetv2": 0.5245833333333333,
+      "icra": 0.5408333333333333
+    },
+    "wood": {
+      "dark": 0.5035087719298247,
+      "mirnetv2": 0.5763157894736842,
+      "icra": 0.5921052631578948
+    },
+    "zipper": {
+      "dark": 0.48188025210084034,
+      "mirnetv2": 0.506827731092437,
+      "icra": 0.5084033613445378
+    }
+  },
+  "domain_macro_auroc": {
+    "dark": 0.5029566708812986,
+    "mirnetv2": 0.4892488721699491,
+    "icra": 0.5358871235976781
+  },
+  "deltas_vs_dark": {
+    "mirnetv2": -0.013707798711349473,
+    "icra": 0.03293045271637951
+  },
+  "labels_used_for_training": false,
+  "test_outputs_used_for_training": false,
+  "test_adaptation": false,
+  "runtime_seconds": 854.0278646000006,
+  "elapsed_seconds": 854.0278646000006,
+  "evaluation_seconds": 158.42723869998008,
+  "peak_cuda_memory_allocated_mib": 187.55615234375,
+  "cuda_memory_metric": "peak allocated memory (not reserved)"
+}

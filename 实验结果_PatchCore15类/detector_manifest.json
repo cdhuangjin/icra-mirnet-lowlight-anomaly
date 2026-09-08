@@ -1,0 +1,212 @@
+[
+  {
+    "category": "bottle",
+    "detector_path": "detectors/bottle.npz",
+    "detector_hash": "5368ac52541f26ba477615354f5e08c9d153fa7b3faf938e8ef4afffb2d8f0b6",
+    "n_train_good": 209,
+    "n_train_features": 209,
+    "memory_bank_shape": [
+      20,
+      256
+    ],
+    "effective_coreset_ratio": 0.09569377990430622,
+    "fit_calls": 1,
+    "fit_seconds": 29.12272810000286
+  },
+  {
+    "category": "cable",
+    "detector_path": "detectors/cable.npz",
+    "detector_hash": "d287de038ae0503acef12bd2890a0cb0aa187840100a094eea6ed814fa1cb8d7",
+    "n_train_good": 224,
+    "n_train_features": 224,
+    "memory_bank_shape": [
+      22,
+      256
+    ],
+    "effective_coreset_ratio": 0.09821428571428571,
+    "fit_calls": 1,
+    "fit_seconds": 50.53211619999638
+  },
+  {
+    "category": "capsule",
+    "detector_path": "detectors/capsule.npz",
+    "detector_hash": "ff0f0b14186344445742999a369fab68464409efb134fef75bdb426283270e9d",
+    "n_train_good": 219,
+    "n_train_features": 219,
+    "memory_bank_shape": [
+      21,
+      256
+    ],
+    "effective_coreset_ratio": 0.0958904109589041,
+    "fit_calls": 1,
+    "fit_seconds": 38.45179189999908
+  },
+  {
+    "category": "carpet",
+    "detector_path": "detectors/carpet.npz",
+    "detector_hash": "15b7bcc6e5cb8ed7fff7a2e42eb2db2385dda5fd277743feb1ed277bdb41190d",
+    "n_train_good": 280,
+    "n_train_features": 280,
+    "memory_bank_shape": [
+      28,
+      256
+    ],
+    "effective_coreset_ratio": 0.1,
+    "fit_calls": 1,
+    "fit_seconds": 67.00779129999864
+  },
+  {
+    "category": "grid",
+    "detector_path": "detectors/grid.npz",
+    "detector_hash": "4c860a56fb4b1a7a5d90573f30f730f73c83b716af3b05a478c47525dcf779b2",
+    "n_train_good": 264,
+    "n_train_features": 264,
+    "memory_bank_shape": [
+      26,
+      256
+    ],
+    "effective_coreset_ratio": 0.09848484848484848,
+    "fit_calls": 1,
+    "fit_seconds": 63.49921010000253
+  },
+  {
+    "category": "hazelnut",
+    "detector_path": "detectors/hazelnut.npz",
+    "detector_hash": "f3e6e641daaac78384b27cf36a836cbb168a060799de8c91a92216bae0002ade",
+    "n_train_good": 391,
+    "n_train_features": 391,
+    "memory_bank_shape": [
+      39,
+      256
+    ],
+    "effective_coreset_ratio": 0.09974424552429667,
+    "fit_calls": 1,
+    "fit_seconds": 60.26849080000102
+  },
+  {
+    "category": "leather",
+    "detector_path": "detectors/leather.npz",
+    "detector_hash": "5148eb4aade700e5d9e671c10b7a3c454aefb6e29c75b3042c1a352bb33e1aae",
+    "n_train_good": 245,
+    "n_train_features": 245,
+    "memory_bank_shape": [
+      24,
+      256
+    ],
+    "effective_coreset_ratio": 0.09795918367346938,
+    "fit_calls": 1,
+    "fit_seconds": 51.146380500002124
+  },
+  {
+    "category": "metal_nut",
+    "detector_path": "detectors/metal_nut.npz",
+    "detector_hash": "1eba2448649683f43493f9c9ed1de303e6205cf457ecb352643069d528d0a349",
+    "n_train_good": 220,
+    "n_train_features": 220,
+    "memory_bank_shape": [
+      22,
+      256
+    ],
+    "effective_coreset_ratio": 0.1,
+    "fit_calls": 1,
+    "fit_seconds": 18.241229800005385
+  },
+  {
+    "category": "pill",
+    "detector_path": "detectors/pill.npz",
+    "detector_hash": "16c7632d1aac319d2d3e9d2c8315de4b56b42a4d19fa270efabe351730277d90",
+    "n_train_good": 267,
+    "n_train_features": 267,
+    "memory_bank_shape": [
+      26,
+      256
+    ],
+    "effective_coreset_ratio": 0.09737827715355805,
+    "fit_calls": 1,
+    "fit_seconds": 25.836706699999922
+  },
+  {
+    "category": "screw",
+    "detector_path": "detectors/screw.npz",
+    "detector_hash": "0af9fb99986e3382b5b2e38ddc9e890629415d9dd567f0c6fccfb5aaa740ecec",
+    "n_train_good": 320,
+    "n_train_features": 320,
+    "memory_bank_shape": [
+      32,
+      256
+    ],
+    "effective_coreset_ratio": 0.1,
+    "fit_calls": 1,
+    "fit_seconds": 60.656369299998914
+  },
+  {
+    "category": "tile",
+    "detector_path": "detectors/tile.npz",
+    "detector_hash": "163610ee343c2ae22902639fd2d69341f427f214a7fdf7eab3fa1e6fb7261ad5",
+    "n_train_good": 230,
+    "n_train_features": 230,
+    "memory_bank_shape": [
+      23,
+      256
+    ],
+    "effective_coreset_ratio": 0.1,
+    "fit_calls": 1,
+    "fit_seconds": 41.70358140000462
+  },
+  {
+    "category": "toothbrush",
+    "detector_path": "detectors/toothbrush.npz",
+    "detector_hash": "06ff155c0bfad2cd84883d79f6f4e4852d654d725dc896faa0ebf39a1d8334ce",
+    "n_train_good": 60,
+    "n_train_features": 60,
+    "memory_bank_shape": [
+      6,
+      256
+    ],
+    "effective_coreset_ratio": 0.1,
+    "fit_calls": 1,
+    "fit_seconds": 8.826771799998824
+  },
+  {
+    "category": "transistor",
+    "detector_path": "detectors/transistor.npz",
+    "detector_hash": "04e5d8547b2409ce52fb75d4e0117ffc07b10ddf21697c2c6ef8af7cad123ec2",
+    "n_train_good": 213,
+    "n_train_features": 213,
+    "memory_bank_shape": [
+      21,
+      256
+    ],
+    "effective_coreset_ratio": 0.09859154929577464,
+    "fit_calls": 1,
+    "fit_seconds": 43.50999409999349
+  },
+  {
+    "category": "wood",
+    "detector_path": "detectors/wood.npz",
+    "detector_hash": "2151bed8fa1538e2cb83f95ec78b322c49b507f639b8a78f8609243f6127f34e",
+    "n_train_good": 247,
+    "n_train_features": 247,
+    "memory_bank_shape": [
+      24,
+      256
+    ],
+    "effective_coreset_ratio": 0.09716599190283401,
+    "fit_calls": 1,
+    "fit_seconds": 64.33167110000068
+  },
+  {
+    "category": "zipper",
+    "detector_path": "detectors/zipper.npz",
+    "detector_hash": "a581fce1e3c236826600d7aa3437cdf92f99a3480c2b52a8cb11c1966f2e5ef8",
+    "n_train_good": 240,
+    "n_train_features": 240,
+    "memory_bank_shape": [
+      24,
+      256
+    ],
+    "effective_coreset_ratio": 0.1,
+    "fit_calls": 1,
+    "fit_seconds": 38.982807599997614
+  }
+]
